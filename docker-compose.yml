@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:latest
+    container_name: dragonflylings-db
+    ports:
+      - "6380:6379"
+    command: ["--notify_keyspace_events", "Ex"]
+    ulimits:
+      memlock: -1
+    restart: unless-stopped

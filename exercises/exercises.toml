@@ -1,0 +1,505 @@
+# exercises.toml - Single source of truth for exercise ordering and metadata
+# Total: 13 modules, 53 exercises
+
+# ─── Module 00: Connect ───────────────────────────────────────────────────────
+
+[[exercises]]
+name = "connect1"
+dir = "00_connect/connect1"
+mode = "test"
+module = "00_connect"
+hint_count = 3
+feynman = "explain"
+description = "Fix connection options and PING to verify connectivity"
+
+[[exercises]]
+name = "connect2"
+dir = "00_connect/connect2"
+mode = "test"
+module = "00_connect"
+hint_count = 3
+feynman = "predict"
+description = "Handle connection timeouts -- what happens when Dragonfly is unreachable?"
+
+[[exercises]]
+name = "connect3"
+dir = "00_connect/connect3"
+mode = "test"
+module = "00_connect"
+hint_count = 3
+feynman = "limit-test"
+description = "Connection pooling: configure PoolSize, MinIdleConns, observe behavior"
+
+# ─── Module 01: Strings ───────────────────────────────────────────────────────
+
+[[exercises]]
+name = "strings1"
+dir = "01_strings/strings1"
+mode = "test"
+module = "01_strings"
+hint_count = 3
+feynman = "predict"
+description = "SET and GET: fix the key-value basics"
+
+[[exercises]]
+name = "strings2"
+dir = "01_strings/strings2"
+mode = "test"
+module = "01_strings"
+hint_count = 3
+feynman = "explain"
+description = "Expiration with TTL: SET with EX, TTL command, what happens after expiry"
+
+[[exercises]]
+name = "strings3"
+dir = "01_strings/strings3"
+mode = "test"
+module = "01_strings"
+hint_count = 3
+feynman = "limit-test"
+description = "SETNX (set-if-not-exists): the foundation of distributed locking"
+
+[[exercises]]
+name = "strings4"
+dir = "01_strings/strings4"
+mode = "test"
+module = "01_strings"
+hint_count = 3
+feynman = "explain"
+description = "INCR/DECR atomicity: why this isn't just GET + math + SET"
+
+[[exercises]]
+name = "strings5"
+dir = "01_strings/strings5"
+mode = "test"
+module = "01_strings"
+hint_count = 3
+feynman = "predict"
+description = "MGET/MSET: batch operations, why fewer round trips matter"
+
+# ─── Module 02: Hashes ────────────────────────────────────────────────────────
+
+[[exercises]]
+name = "hashes1"
+dir = "02_hashes/hashes1"
+mode = "test"
+module = "02_hashes"
+hint_count = 3
+feynman = "predict"
+description = "HSET/HGET: model a user profile as a hash"
+
+[[exercises]]
+name = "hashes2"
+dir = "02_hashes/hashes2"
+mode = "test"
+module = "02_hashes"
+hint_count = 3
+feynman = "explain"
+description = "HMSET/HMGET: batch field operations, partial reads"
+
+[[exercises]]
+name = "hashes3"
+dir = "02_hashes/hashes3"
+mode = "test"
+module = "02_hashes"
+hint_count = 3
+feynman = "limit-test"
+description = "HINCRBY for counters inside hashes (page view tracker)"
+
+[[exercises]]
+name = "hashes4"
+dir = "02_hashes/hashes4"
+mode = "test"
+module = "02_hashes"
+hint_count = 3
+feynman = "explain"
+description = "Hash vs. multiple Strings: when to use which (memory analysis)"
+
+# ─── Module 03: Lists ─────────────────────────────────────────────────────────
+
+[[exercises]]
+name = "lists1"
+dir = "03_lists/lists1"
+mode = "test"
+module = "03_lists"
+hint_count = 3
+feynman = "predict"
+description = "LPUSH/RPUSH/LPOP/RPOP: build a simple task queue"
+
+[[exercises]]
+name = "lists2"
+dir = "03_lists/lists2"
+mode = "test"
+module = "03_lists"
+hint_count = 3
+feynman = "explain"
+description = "LRANGE: paginate a list, understand 0-based vs -1 indexing"
+
+[[exercises]]
+name = "lists3"
+dir = "03_lists/lists3"
+mode = "test"
+module = "03_lists"
+hint_count = 3
+feynman = "limit-test"
+description = "BLPOP: blocking pop as a worker pattern (with timeout)"
+
+[[exercises]]
+name = "lists4"
+dir = "03_lists/lists4"
+mode = "test"
+module = "03_lists"
+hint_count = 3
+feynman = "explain"
+description = "LLEN + LTRIM: bounded lists for 'last N items' pattern"
+
+# ─── Module 04: Sets and Sorted Sets ──────────────────────────────────────────
+
+[[exercises]]
+name = "sets1"
+dir = "04_sets/sets1"
+mode = "test"
+module = "04_sets"
+hint_count = 3
+feynman = "predict"
+description = "SADD/SMEMBERS/SISMEMBER: tag system with unique tags"
+
+[[exercises]]
+name = "sets2"
+dir = "04_sets/sets2"
+mode = "test"
+module = "04_sets"
+hint_count = 3
+feynman = "explain"
+description = "SINTER/SUNION/SDIFF: find common friends between users"
+
+[[exercises]]
+name = "zsets1"
+dir = "04_sets/zsets1"
+mode = "test"
+module = "04_sets"
+hint_count = 3
+feynman = "predict"
+description = "ZADD/ZRANGE/ZSCORE: build a leaderboard"
+
+[[exercises]]
+name = "zsets2"
+dir = "04_sets/zsets2"
+mode = "test"
+module = "04_sets"
+hint_count = 3
+feynman = "limit-test"
+description = "ZRANGEBYSCORE + ZREMRANGEBYSCORE: sliding window rate limiter"
+
+[[exercises]]
+name = "zsets3"
+dir = "04_sets/zsets3"
+mode = "test"
+module = "04_sets"
+hint_count = 3
+feynman = "explain"
+description = "ZRANK for real-time ranking, ZINCRBY for score updates"
+
+# ─── Module 05: Expiration ────────────────────────────────────────────────────
+
+[[exercises]]
+name = "expire1"
+dir = "05_expiration/expire1"
+mode = "test"
+module = "05_expiration"
+hint_count = 3
+feynman = "explain"
+description = "EXPIRE/PERSIST/TTL: set, check, and remove expiration"
+
+[[exercises]]
+name = "expire2"
+dir = "05_expiration/expire2"
+mode = "test"
+module = "05_expiration"
+hint_count = 3
+feynman = "predict"
+description = "Maxmemory policies: what happens when memory is full? (allkeys-lru, volatile-lru, noeviction)"
+
+[[exercises]]
+name = "expire3"
+dir = "05_expiration/expire3"
+mode = "test"
+module = "05_expiration"
+hint_count = 3
+feynman = "limit-test"
+description = "Key space notifications: subscribe to expiration events"
+
+# ─── Module 06: Pipelining and Transactions ───────────────────────────────────
+
+[[exercises]]
+name = "pipe1"
+dir = "06_pipeline/pipe1"
+mode = "test"
+module = "06_pipeline"
+hint_count = 3
+feynman = "predict"
+description = "Pipeline: batch 100 SETs, compare latency vs. individual commands"
+
+[[exercises]]
+name = "pipe2"
+dir = "06_pipeline/pipe2"
+mode = "test"
+module = "06_pipeline"
+hint_count = 3
+feynman = "explain"
+description = "Pipeline error handling: partial failures (some cmds fail, others succeed)"
+
+[[exercises]]
+name = "tx1"
+dir = "06_pipeline/tx1"
+mode = "test"
+module = "06_pipeline"
+hint_count = 3
+feynman = "explain"
+description = "MULTI/EXEC: transfer balance between two keys atomically"
+
+[[exercises]]
+name = "tx2"
+dir = "06_pipeline/tx2"
+mode = "test"
+module = "06_pipeline"
+hint_count = 3
+feynman = "limit-test"
+description = "WATCH/MULTI: optimistic locking, detect and retry on conflict"
+
+[[exercises]]
+name = "tx3"
+dir = "06_pipeline/tx3"
+mode = "test"
+module = "06_pipeline"
+hint_count = 3
+feynman = "predict"
+description = "Pipeline vs. Transaction vs. Lua script: when to use each (comparison exercise)"
+
+# ─── Module 07: Pub/Sub ───────────────────────────────────────────────────────
+
+[[exercises]]
+name = "pubsub1"
+dir = "07_pubsub/pubsub1"
+mode = "test"
+module = "07_pubsub"
+hint_count = 3
+feynman = "predict"
+description = "SUBSCRIBE/PUBLISH: basic chat room with two goroutines"
+
+[[exercises]]
+name = "pubsub2"
+dir = "07_pubsub/pubsub2"
+mode = "test"
+module = "07_pubsub"
+hint_count = 3
+feynman = "explain"
+description = "Pattern subscriptions (PSUBSCRIBE): wildcard channels"
+
+[[exercises]]
+name = "pubsub3"
+dir = "07_pubsub/pubsub3"
+mode = "test"
+module = "07_pubsub"
+hint_count = 3
+feynman = "limit-test"
+description = "Pub/Sub failure modes: what happens when subscriber disconnects and reconnects?"
+
+# ─── Module 08: Streams ───────────────────────────────────────────────────────
+
+[[exercises]]
+name = "streams1"
+dir = "08_streams/streams1"
+mode = "test"
+module = "08_streams"
+hint_count = 3
+feynman = "predict"
+description = "XADD/XREAD: produce and consume events from a stream"
+
+[[exercises]]
+name = "streams2"
+dir = "08_streams/streams2"
+mode = "test"
+module = "08_streams"
+hint_count = 3
+feynman = "explain"
+description = "XRANGE/XLEN: query stream history by time range"
+
+[[exercises]]
+name = "streams3"
+dir = "08_streams/streams3"
+mode = "test"
+module = "08_streams"
+hint_count = 3
+feynman = "explain"
+description = "Consumer groups: XGROUP CREATE, XREADGROUP, XACK"
+
+[[exercises]]
+name = "streams4"
+dir = "08_streams/streams4"
+mode = "test"
+module = "08_streams"
+hint_count = 3
+feynman = "limit-test"
+description = "PEL and redelivery: XPENDING + XCLAIM for crash recovery"
+
+[[exercises]]
+name = "streams5"
+dir = "08_streams/streams5"
+mode = "test"
+module = "08_streams"
+hint_count = 3
+feynman = "predict"
+description = "XTRIM + maxlen: bounded streams for production use"
+
+# ─── Module 09: Lua ───────────────────────────────────────────────────────────
+
+[[exercises]]
+name = "lua1"
+dir = "09_lua/lua1"
+mode = "test"
+module = "09_lua"
+hint_count = 3
+feynman = "predict"
+description = "EVAL basics: a Lua script that does conditional SET (compare-and-swap)"
+
+[[exercises]]
+name = "lua2"
+dir = "09_lua/lua2"
+mode = "test"
+module = "09_lua"
+hint_count = 3
+feynman = "explain"
+description = "KEYS vs ARGV: why Redis requires you to declare keys upfront"
+
+[[exercises]]
+name = "lua3"
+dir = "09_lua/lua3"
+mode = "test"
+module = "09_lua"
+hint_count = 3
+feynman = "limit-test"
+description = "EVALSHA + script caching: avoid re-sending the script every time"
+
+[[exercises]]
+name = "lua4"
+dir = "09_lua/lua4"
+mode = "test"
+module = "09_lua"
+hint_count = 3
+feynman = "explain"
+description = "Dragonfly gotcha: multi-shard Lua requires {hashtag} key prefixes"
+
+# ─── Module 10: Dragonfly ─────────────────────────────────────────────────────
+
+[[exercises]]
+name = "dragon1"
+dir = "10_dragonfly/dragon1"
+mode = "test"
+module = "10_dragonfly"
+hint_count = 3
+feynman = "explain"
+description = "Multi-threaded architecture: observe parallel throughput with concurrent goroutines"
+
+[[exercises]]
+name = "dragon2"
+dir = "10_dragonfly/dragon2"
+mode = "test"
+module = "10_dragonfly"
+hint_count = 3
+feynman = "predict"
+description = "Snapshot without fork: trigger BGSAVE, observe zero memory spike (vs Redis 2x memory)"
+
+[[exercises]]
+name = "dragon3"
+dir = "10_dragonfly/dragon3"
+mode = "test"
+module = "10_dragonfly"
+hint_count = 3
+feynman = "limit-test"
+description = "Native JSON: JSON.SET / JSON.GET without modules (compare to RedisJSON)"
+
+[[exercises]]
+name = "dragon4"
+dir = "10_dragonfly/dragon4"
+mode = "test"
+module = "10_dragonfly"
+hint_count = 3
+feynman = "explain"
+description = "Dragonfly gotchas: WAIT behavior, OBJECT ENCODING differences, no Sentinel"
+
+# ─── Module 11: Production ────────────────────────────────────────────────────
+
+[[exercises]]
+name = "prod1"
+dir = "11_production/prod1"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "explain"
+description = "Cache-aside pattern: read-through with thundering herd protection (singleflight)"
+
+[[exercises]]
+name = "prod2"
+dir = "11_production/prod2"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "limit-test"
+description = "Distributed lock: SETNX with expiry, handle lock extension, compare to Redlock"
+
+[[exercises]]
+name = "prod3"
+dir = "11_production/prod3"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "explain"
+description = "Rate limiter: sliding window using sorted sets (production-grade)"
+
+[[exercises]]
+name = "prod4"
+dir = "11_production/prod4"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "predict"
+description = "Session storage: hash-based sessions with expiry, graceful degradation"
+
+[[exercises]]
+name = "prod5"
+dir = "11_production/prod5"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "limit-test"
+description = "Hot key mitigation: detect and handle with local caching layer"
+
+[[exercises]]
+name = "prod6"
+dir = "11_production/prod6"
+mode = "test"
+module = "11_production"
+hint_count = 3
+feynman = "explain"
+description = "Circuit breaker: wrap Redis client with fallback when Dragonfly is degraded"
+
+# ─── Module 12: Capstone ──────────────────────────────────────────────────────
+
+[[exercises]]
+name = "capstone1"
+dir = "12_capstone/capstone1"
+mode = "test"
+module = "12_capstone"
+hint_count = 0
+feynman = "explain"
+description = "Build a real-time event processing pipeline: Streams + Consumer Groups + Lua + Sorted Set leaderboard"
+
+[[exercises]]
+name = "capstone2"
+dir = "12_capstone/capstone2"
+mode = "test"
+module = "12_capstone"
+hint_count = 0
+feynman = "explain"
+description = "Build a rate-limited API cache: cache-aside + sliding window rate limiter + circuit breaker + pub/sub invalidation"
