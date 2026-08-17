@@ -40,7 +40,7 @@ return 0
 // Use client.ScriptLoad(ctx, decrIfPositiveScript).Result()
 func LoadScript(ctx context.Context, client *redis.Client) (string, error) {
 	// BUG: not implemented — returns empty SHA, causing EvalSha to fail
-	return "", nil
+	return client.ScriptLoad(ctx, decrIfPositiveScript).Result()
 }
 
 // DecrIfPositive decrements the counter at key if it's > 0.

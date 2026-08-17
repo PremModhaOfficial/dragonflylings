@@ -30,9 +30,9 @@ func AddPlayer(client *redis.Client, leaderboardKey, player string, score float6
 func GetRank(client *redis.Client, leaderboardKey, player string) (int64, error) {
 	ctx := context.Background()
 	// TODO: use client.ZRevRank(ctx, leaderboardKey, player).Result()
-	// ZRevRank gives rank from highest score (rank 0 = best player)
-	score, err := client.ZScore(ctx, leaderboardKey, player).Result() // BUG: returns score, not rank
-	return int64(score), err
+	// ZRevRank gives rank from highest rank (rank 0 = best player)
+	rank, err := client.ZRevRank(ctx, leaderboardKey, player).Result() // BUG: returns score, not rank
+	return int64(rank), err
 }
 
 // IncrScore adds points to a player's existing score.
@@ -40,6 +40,6 @@ func GetRank(client *redis.Client, leaderboardKey, player string) (int64, error)
 func IncrScore(client *redis.Client, leaderboardKey, player string, points float64) (float64, error) {
 	ctx := context.Background()
 	// TODO: use client.ZIncrBy(ctx, leaderboardKey, points, player).Result()
-	err := client.ZAdd(ctx, leaderboardKey, redis.Z{Score: points, Member: player}).Err() // BUG: replaces score
+	points, err := client.ZIncrBy(ctx, leaderboardKey, points, player).Result() // BUG: replaces score
 	return points, err
 }

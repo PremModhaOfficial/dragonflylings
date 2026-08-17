@@ -20,11 +20,19 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"strings"
 	"time"
 
 	"github.com/redis/go-redis/v9"
 )
+
+// isUnknownCommand returns true when Dragonfly (or Redis) reports that a
+// command is not implemented. Callers treat this as a graceful "not supported"
+// signal rather than a hard failure — Dragonfly omits some Redis commands
+// (e.g. WAIT, OBJECT) in standalone builds.
+func isUnknownCommand(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "unknown command")
+}
 
 // WaitForReplication waits for numReplicas replicas to acknowledge all writes,
 // with the given timeout in milliseconds.
@@ -34,14 +42,13 @@ import (
 // In Dragonfly standalone mode, WAIT always returns 0 — this is correct, not an error.
 func WaitForReplication(ctx context.Context, client *redis.Client, numReplicas int, timeoutMs int64) (int64, error) {
 	result, err := client.Wait(ctx, numReplicas, time.Duration(timeoutMs)*time.Millisecond).Result()
+	if isUnknownCommand(err) {
+		return 0, nil
+	}
 	if err != nil {
 		return 0, err
 	}
-	// BUG: treats 0 as an error — but Dragonfly standalone always returns 0
-	if result == 0 {
-		return 0, fmt.Errorf("replication timeout: 0 replicas acknowledged (expected %d)", numReplicas)
-	}
-	return result, nil
+	return result, nil // 0 is correct for standalone Dragonfly
 }
 
 // EncodingInfo holds information about a key's internal encoding.
@@ -63,12 +70,11 @@ var knownEncodings = map[string]bool{
 // Dragonfly may return encodings not in the standard Redis list.
 func GetEncoding(ctx context.Context, client *redis.Client, key string) (EncodingInfo, error) {
 	result, err := client.ObjectEncoding(ctx, key).Result()
+	if isUnknownCommand(err) {
+		return EncodingInfo{Encoding: "unsupported", IsKnown: false}, nil
+	}
 	if err != nil {
 		return EncodingInfo{}, err
 	}
-	if !knownEncodings[result] {
-		// BUG: panics on unknown encoding — should return gracefully
-		panic(fmt.Sprintf("unknown encoding %q — is this Redis or Dragonfly?", result))
-	}
-	return EncodingInfo{Encoding: result, IsKnown: true}, nil
+	return EncodingInfo{Encoding: result, IsKnown: knownEncodings[result]}, nil
 }

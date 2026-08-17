@@ -75,11 +75,13 @@ func SetConcurrent(ctx context.Context, client *redis.Client, keys []string, val
 		wg.Add(1)
 		go func(k string) {
 			// BUG: missing wg.Done() — WaitGroup never decrements
+			defer wg.Done()
 			if err := client.Set(ctx, k, value, 0).Err(); err == nil {
 				atomic.AddInt64(&count, 1)
 			}
 		}(key)
 	}
 	// BUG: missing wg.Wait() — returns immediately before goroutines complete
+	wg.Wait()
 	return count
 }

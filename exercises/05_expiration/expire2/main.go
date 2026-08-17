@@ -20,7 +20,7 @@ import (
 func GetMemoryLimit(client *redis.Client) (int64, error) {
 	ctx := context.Background()
 	// BUG: wrong config parameter name -- should be "maxmemory" (no hyphen, no underscore)
-	vals, err := client.ConfigGet(ctx, "max-memory").Result()
+	vals, err := client.ConfigGet(ctx, "maxmemory").Result()
 	if err != nil {
 		return 0, err
 	}
@@ -37,7 +37,7 @@ func GetMemoryLimit(client *redis.Client) (int64, error) {
 func SetMemoryLimit(client *redis.Client, bytes int64) error {
 	ctx := context.Background()
 	// BUG: wrong config parameter name -- should be "maxmemory"
-	return client.ConfigSet(ctx, "max_memory", fmt.Sprintf("%d", bytes)).Err()
+	return client.ConfigSet(ctx, "maxmemory", fmt.Sprintf("%d", bytes)).Err()
 }
 
 func main() {}

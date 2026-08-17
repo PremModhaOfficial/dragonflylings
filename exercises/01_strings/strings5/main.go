@@ -25,12 +25,15 @@ import (
 func SetPreferences(client *redis.Client, prefs map[string]string) error {
 	ctx := context.Background()
 	// TODO: replace this loop with client.MSet(ctx, prefs).Err()
-	for k, v := range prefs {
-		if err := client.Set(ctx, k, v, 0).Err(); err != nil {
-			return err
-		}
-	}
-	return nil
+
+	_, err := client.MSet(ctx, prefs).Result()
+
+	// for k, v := range prefs {
+	// 	if err := client.Set(ctx, k, v, 0).Err(); err != nil {
+	// 		return err
+	// 	}
+	// }
+	return err
 }
 
 // GetPreferences retrieves values for the given keys in order.
@@ -39,14 +42,19 @@ func SetPreferences(client *redis.Client, prefs map[string]string) error {
 func GetPreferences(client *redis.Client, keys []string) ([]interface{}, error) {
 	ctx := context.Background()
 	// TODO: replace this with client.MGet(ctx, keys...).Result()
-	results := make([]interface{}, len(keys))
-	for i, k := range keys {
-		val, err := client.Get(ctx, k).Result()
-		if err != nil {
-			// BUG: treating redis.Nil as an error — should store nil in results instead
-			return nil, err
-		}
-		results[i] = val
-	}
-	return results, nil
+
+	// results := make([]interface{}, len(keys))
+
+	// ANS
+	return client.MGet(ctx, keys...).Result()
+
+	// for i, k := range keys {
+	// 	val, err := client.Get(ctx, k).Result()
+	// 	if err != nil {
+	// 		// BUG: treating redis.Nil as an error — should store nil in results instead
+	// 		return nil, err
+	// 	}
+	// 	results[i] = val
+	// }
+	// return results, err
 }

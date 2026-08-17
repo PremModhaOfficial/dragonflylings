@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1774416278451,
+  "lastScanned": 1776255647334,
   "projectRoot": "/home/prem-modha/projects/goProjects/reddis",
   "techStack": {
     "languages": [
@@ -11,6 +11,14 @@
         "markers": [
           "go.mod"
         ]
+      },
+      {
+        "name": "C/C++",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "Makefile"
+        ]
       }
     ],
     "frameworks": [],
@@ -18,8 +26,8 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": null,
-    "testCommand": null,
+    "buildCommand": "make build",
+    "testCommand": "make test",
     "lintCommand": null,
     "devCommand": null,
     "scripts": {}
@@ -33,7 +41,9 @@
   "structure": {
     "isMonorepo": false,
     "workspaces": [],
-    "mainDirectories": [],
+    "mainDirectories": [
+      "lib"
+    ],
     "gitBranches": null
   },
   "customNotes": [],
@@ -42,311 +52,206 @@
       "path": "cmd",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1774416278444,
+      "lastAccessed": 1776255647318,
       "keyFiles": [
         "main.go"
       ]
+    },
+    "exercises": {
+      "path": "exercises",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776255647325,
+      "keyFiles": [
+        "exercises.toml"
+      ]
+    },
+    "feynman": {
+      "path": "feynman",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776255647330,
+      "keyFiles": [
+        "gap_notebook.md"
+      ]
+    },
+    "internal": {
+      "path": "internal",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776255647331,
+      "keyFiles": []
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 0,
+      "lastAccessed": 1776255647331,
+      "keyFiles": []
+    },
+    "solutions": {
+      "path": "solutions",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776255647332,
+      "keyFiles": []
     }
   },
   "hotPaths": [
     {
       "path": "",
-      "accessCount": 9,
-      "lastAccessed": 1774421887772,
+      "accessCount": 4,
+      "lastAccessed": 1774630247510,
       "type": "directory"
     },
     {
-      "path": "cmd/dragonflylings/main.go",
-      "accessCount": 8,
-      "lastAccessed": 1774417897150,
+      "path": "exercises/10_dragonfly/dragon4/main.go",
+      "accessCount": 3,
+      "lastAccessed": 1776257655079,
+      "type": "file"
+    },
+    {
+      "path": "exercises/10_dragonfly/dragon2/main.go",
+      "accessCount": 2,
+      "lastAccessed": 1776256665121,
+      "type": "file"
+    },
+    {
+      "path": "exercises/00_connect",
+      "accessCount": 1,
+      "lastAccessed": 1774630229277,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/01_strings",
+      "accessCount": 1,
+      "lastAccessed": 1774630229726,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/02_hashes",
+      "accessCount": 1,
+      "lastAccessed": 1774630230251,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/03_lists",
+      "accessCount": 1,
+      "lastAccessed": 1774630230609,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/04_sets",
+      "accessCount": 1,
+      "lastAccessed": 1774630230997,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/05_expiration",
+      "accessCount": 1,
+      "lastAccessed": 1774630231385,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/06_pipeline",
+      "accessCount": 1,
+      "lastAccessed": 1774630235769,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/07_pubsub",
+      "accessCount": 1,
+      "lastAccessed": 1774630236014,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/08_streams",
+      "accessCount": 1,
+      "lastAccessed": 1774630236904,
+      "type": "directory"
+    },
+    {
+      "path": "exercises/09_lua",
+      "accessCount": 1,
+      "lastAccessed": 1774630236960,
+      "type": "directory"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1774630249722,
       "type": "file"
     },
     {
       "path": "go.mod",
-      "accessCount": 6,
-      "lastAccessed": 1774418126392,
-      "type": "file"
-    },
-    {
-      "path": "docker-compose.yml",
-      "accessCount": 5,
-      "lastAccessed": 1774420615228,
-      "type": "file"
-    },
-    {
-      "path": "lib/testutil/testutil.go",
-      "accessCount": 5,
-      "lastAccessed": 1774421190643,
-      "type": "file"
-    },
-    {
-      "path": "internal/runner/runner.go",
-      "accessCount": 5,
-      "lastAccessed": 1774421263863,
-      "type": "file"
-    },
-    {
-      "path": "exercises/09_lua/README.md",
-      "accessCount": 5,
-      "lastAccessed": 1774422002323,
-      "type": "file"
-    },
-    {
-      "path": "cmd/main.go",
-      "accessCount": 3,
-      "lastAccessed": 1774417554900,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect2/main.go",
-      "accessCount": 3,
-      "lastAccessed": 1774418044209,
-      "type": "file"
-    },
-    {
-      "path": "exercises/exercises.toml",
-      "accessCount": 3,
-      "lastAccessed": 1774421095863,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421101629,
-      "type": "file"
-    },
-    {
-      "path": "exercises/05_expiration/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421104074,
-      "type": "file"
-    },
-    {
-      "path": "exercises/06_pipeline/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421104340,
-      "type": "file"
-    },
-    {
-      "path": "exercises/07_pubsub/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421109439,
-      "type": "file"
-    },
-    {
-      "path": "exercises/08_streams/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421109868,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect1/main_test.go",
-      "accessCount": 3,
-      "lastAccessed": 1774421256035,
-      "type": "file"
-    },
-    {
-      "path": "exercises/09_lua/lua1/gap.md",
-      "accessCount": 3,
-      "lastAccessed": 1774421684035,
-      "type": "file"
-    },
-    {
-      "path": "internal/runner/watcher.go",
-      "accessCount": 2,
-      "lastAccessed": 1774417741327,
-      "type": "file"
-    },
-    {
-      "path": "internal/runner/manifest.go",
-      "accessCount": 2,
-      "lastAccessed": 1774417884236,
-      "type": "file"
-    },
-    {
-      "path": "Makefile",
-      "accessCount": 2,
-      "lastAccessed": 1774418010227,
-      "type": "file"
-    },
-    {
-      "path": "README.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421095959,
-      "type": "file"
-    },
-    {
-      "path": "exercises/01_strings/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421102185,
-      "type": "file"
-    },
-    {
-      "path": "exercises/02_hashes/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421102627,
-      "type": "file"
-    },
-    {
-      "path": "exercises/03_lists/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421103014,
-      "type": "file"
-    },
-    {
-      "path": "exercises/04_sets/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421103669,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect1/main.go",
-      "accessCount": 2,
-      "lastAccessed": 1774421133209,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect1/explain.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421133656,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect1/gap.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421134224,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect1/hint.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421134578,
-      "type": "file"
-    },
-    {
-      "path": "exercises/09_lua/lua1/explain.md",
-      "accessCount": 2,
-      "lastAccessed": 1774421166275,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect2/main_test.go",
-      "accessCount": 2,
-      "lastAccessed": 1774421262265,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect3/main_test.go",
-      "accessCount": 2,
-      "lastAccessed": 1774421262722,
-      "type": "file"
-    },
-    {
-      "path": "feynman/gap_notebook.md",
       "accessCount": 1,
-      "lastAccessed": 1774417577260,
+      "lastAccessed": 1774630249963,
       "type": "file"
     },
     {
-      "path": "internal/runner/progress.go",
+      "path": "internal/runner",
       "accessCount": 1,
-      "lastAccessed": 1774417664015,
-      "type": "file"
+      "lastAccessed": 1774630250682,
+      "type": "directory"
+    },
+    {
+      "path": "lib/testutil",
+      "accessCount": 1,
+      "lastAccessed": 1774630251026,
+      "type": "directory"
     },
     {
       "path": "internal/runner/hint.go",
       "accessCount": 1,
-      "lastAccessed": 1774417673669,
+      "lastAccessed": 1774630254213,
       "type": "file"
     },
     {
       "path": "internal/runner/printer.go",
       "accessCount": 1,
-      "lastAccessed": 1774417699492,
+      "lastAccessed": 1774630254452,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect2/hint.md",
+      "path": "internal/runner/progress.go",
       "accessCount": 1,
-      "lastAccessed": 1774417829206,
+      "lastAccessed": 1774630254708,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect2/explain.md",
+      "path": "lib/testutil/testutil.go",
       "accessCount": 1,
-      "lastAccessed": 1774417837000,
+      "lastAccessed": 1774630254980,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect2/gap.md",
+      "path": "exercises/10_dragonfly/dragon2/explain.md",
       "accessCount": 1,
-      "lastAccessed": 1774417842902,
+      "lastAccessed": 1776255686356,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect3/main.go",
+      "path": "exercises/10_dragonfly/dragon2/gap.md",
       "accessCount": 1,
-      "lastAccessed": 1774417856289,
+      "lastAccessed": 1776255686608,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect3/hint.md",
+      "path": "exercises/10_dragonfly/dragon2/main_test.go",
       "accessCount": 1,
-      "lastAccessed": 1774417869369,
+      "lastAccessed": 1776256586102,
       "type": "file"
     },
     {
-      "path": "exercises/00_connect/connect3/explain.md",
+      "path": "exercises/10_dragonfly/dragon4/main_test.go",
       "accessCount": 1,
-      "lastAccessed": 1774417877095,
+      "lastAccessed": 1776257604033,
       "type": "file"
     },
     {
-      "path": "exercises/09_lua/lua1/main.go",
+      "path": "exercises/10_dragonfly/dragon4/hint.md",
       "accessCount": 1,
-      "lastAccessed": 1774417881761,
-      "type": "file"
-    },
-    {
-      "path": "exercises/00_connect/connect3/gap.md",
-      "accessCount": 1,
-      "lastAccessed": 1774417883973,
-      "type": "file"
-    },
-    {
-      "path": "solutions/00_connect/connect1/main.go",
-      "accessCount": 1,
-      "lastAccessed": 1774417885455,
-      "type": "file"
-    },
-    {
-      "path": "solutions/00_connect/connect2/main.go",
-      "accessCount": 1,
-      "lastAccessed": 1774417887301,
-      "type": "file"
-    },
-    {
-      "path": "solutions/00_connect/connect3/main.go",
-      "accessCount": 1,
-      "lastAccessed": 1774417888859,
-      "type": "file"
-    },
-    {
-      "path": "exercises/09_lua/lua1/main_test.go",
-      "accessCount": 1,
-      "lastAccessed": 1774417890728,
-      "type": "file"
-    },
-    {
-      "path": "exercises/09_lua/lua1/hint.md",
-      "accessCount": 1,
-      "lastAccessed": 1774417895488,
-      "type": "file"
-    },
-    {
-      "path": "solutions/09_lua/lua1/main.go",
-      "accessCount": 1,
-      "lastAccessed": 1774417910333,
+      "lastAccessed": 1776257604578,
       "type": "file"
     }
   ],

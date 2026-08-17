@@ -23,7 +23,7 @@ import (
 // BUG: The expiration is hardcoded to 0 — keys never expire.
 func SetSession(client *redis.Client, sessionID, token string, ttl time.Duration) error {
 	ctx := context.Background()
-	return client.Set(ctx, "session:"+sessionID, token, 0).Err() // TODO: use ttl instead of 0
+	return client.Set(ctx, "session:"+sessionID, token, ttl).Err() // TODO: use ttl instead of 0
 }
 
 // GetSession retrieves a session token.

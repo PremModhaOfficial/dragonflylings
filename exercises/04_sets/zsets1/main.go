@@ -30,12 +30,18 @@ func AddScore(client *redis.Client, leaderboardKey, player string, score float64
 
 // GetLeaderboard returns the top N players by score (highest first).
 // BUG: ZRange returns members in ASCENDING score order (lowest first).
-//      A leaderboard should show the highest scores first.
+//
+//	A leaderboard should show the highest scores first.
 func GetLeaderboard(client *redis.Client, leaderboardKey string, topN int64) ([]string, error) {
 	ctx := context.Background()
 	// TODO: use ZRevRange (reverse range = highest score first)
 	// or ZRangeArgs with Rev: true
-	return client.ZRange(ctx, leaderboardKey, 0, topN-1).Result() // BUG: ascending order
+	return client.ZRangeArgs(ctx, redis.ZRangeArgs{
+		Key:   leaderboardKey,
+		Start: 0,
+		Stop:  topN - 1,
+		Rev:   true,
+	}).Result() // BUG: ascending order
 }
 
 // GetScore returns a player's current score.

@@ -27,19 +27,22 @@ import (
 // IsAllowed returns true if the identifier has made fewer than limit
 // requests in the last windowSeconds seconds.
 // BUG: Uses ZCard (counts ALL members) instead of ZCount with window range,
-//      AND never removes old entries. Old entries outside the window keep
-//      accumulating and eventually block all new requests.
+//
+//	AND never removes old entries. Old entries outside the window keep
+//	accumulating and eventually block all new requests.
 func IsAllowed(client *redis.Client, rateLimitKey string, limit int, windowSeconds int64) (bool, error) {
 	ctx := context.Background()
 	now := time.Now().UnixNano()
 
 	// TODO: remove old entries before counting:
-	// windowStart := now - windowSeconds*int64(time.Second)
-	// client.ZRemRangeByScore(ctx, rateLimitKey, "-inf", fmt.Sprintf("%d", windowStart)).Err()
+	windowStart := now - windowSeconds*int64(time.Second)
+	windowStartStr := fmt.Sprintf("%d", windowStart)
+	nowStr := fmt.Sprintf("%d", now)
+	client.ZRemRangeByScore(ctx, rateLimitKey, "-inf", windowStartStr).Err()
 
 	// BUG: ZCard counts ALL members (including old ones outside the window).
 	// Should use ZCount with [windowStart, now] range instead.
-	count, err := client.ZCard(ctx, rateLimitKey).Result()
+	count, err := client.ZCount(ctx, rateLimitKey, windowStartStr, nowStr).Result()
 	if err != nil {
 		return false, err
 	}

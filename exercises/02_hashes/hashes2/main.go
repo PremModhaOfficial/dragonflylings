@@ -29,13 +29,16 @@ func SetUserProfile(client *redis.Client, userKey string, fields map[string]inte
 func GetUserFields(client *redis.Client, userKey string, fields []string) ([]interface{}, error) {
 	ctx := context.Background()
 	// TODO: replace this loop with client.HMGet(ctx, userKey, fields...).Result()
-	results := make([]interface{}, len(fields))
-	for i, field := range fields {
-		val, err := client.HGet(ctx, userKey, field).Result()
-		if err != nil {
-			return nil, err // BUG: treats missing field as error; HMGet returns nil instead
-		}
-		results[i] = val
-	}
-	return results, nil
+
+	return client.HMGet(ctx, userKey, fields...).Result()
+
+	// results := make([]interface{}, len(fields))
+	// for i, field := range fields {
+	// 	val, err := client.HGet(ctx, userKey, field).Result()
+	// 	if err != nil {
+	// 		return nil, err // BUG: treats missing field as error; HMGet returns nil instead
+	// 	}
+	// 	results[i] = val
+	// }
+	// return results, nil
 }

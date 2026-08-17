@@ -20,7 +20,7 @@ import (
 // added after group creation. Existing messages in the stream are skipped.
 // Use "0" to process all existing messages from the start.
 func CreateGroup(client *redis.Client, ctx context.Context, stream, group string) error {
-	return client.XGroupCreateMkStream(ctx, stream, group, "$").Err() // BUG: should be "0"
+	return client.XGroupCreateMkStream(ctx, stream, group, "0").Err() // BUG: should be "0"
 }
 
 // ReadGroup reads up to count undelivered messages for the given consumer.
@@ -30,7 +30,7 @@ func ReadGroup(client *redis.Client, ctx context.Context, stream, group, consume
 	results, err := client.XReadGroup(ctx, &redis.XReadGroupArgs{
 		Group:    group,
 		Consumer: consumer,
-		Streams:  []string{stream, "0"}, // BUG: should be ">"
+		Streams:  []string{stream, ">"}, // BUG: should be ">"
 		Count:    count,
 		Block:    0,
 	}).Result()
@@ -46,7 +46,7 @@ func ReadGroup(client *redis.Client, ctx context.Context, stream, group, consume
 // AckMessages acknowledges all messages so they are removed from the PEL.
 // BUG: Calls XAck on the wrong key -- uses stream+":ack" instead of stream.
 func AckMessages(client *redis.Client, ctx context.Context, stream, group string, ids ...string) error {
-	return client.XAck(ctx, stream+":ack", group, ids...).Err() // BUG: should be stream
+	return client.XAck(ctx, stream, group, ids...).Err() // BUG: should be stream
 }
 
 func main() {}

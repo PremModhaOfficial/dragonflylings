@@ -3,9 +3,9 @@ package main
 // EXERCISE: lists2 - LRANGE Pagination
 //
 // PREDICT: Before fixing anything, answer:
-//   - What does LRANGE mylist 0 -1 return?
-//   - What does LRANGE mylist 0 0 return?
-//   - If a list has 10 items (indices 0-9), what does LRANGE mylist 0 4 return?
+//   - What does LRANGE mylist 0 -1 return? // reversed?
+//   - What does LRANGE mylist 0 0 return? // nothing?
+//   - If a list has 10 items (indices 0-9), what does LRANGE mylist 0 4 return? 3 items ?
 //
 // The test paginates a list of activity events.
 // BUG: GetPage uses 1-based indexing instead of Redis's 0-based indexing.
@@ -30,7 +30,7 @@ func AddActivity(client *redis.Client, listKey, activity string) error {
 func GetPage(client *redis.Client, listKey string, page, pageSize int64) ([]string, error) {
 	ctx := context.Background()
 	// BUG: 1-based calculation — page 1 starts at index 1, skipping the first item
-	start := page * pageSize            // TODO: should be (page-1) * pageSize
+	start := (page - 1) * pageSize // TODO: should be (page-1) * pageSize
 	stop := start + pageSize - 1
 	return client.LRange(ctx, listKey, start, stop).Result()
 }

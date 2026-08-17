@@ -27,6 +27,7 @@ func AddEvent(client *redis.Client, listKey, event string, maxItems int64) error
 		return err
 	}
 	// TODO: add client.LTrim(ctx, listKey, 0, maxItems-1).Err()
+	client.LTrim(ctx, listKey, 0, maxItems-1)
 	// This keeps only the first maxItems elements (indices 0 to maxItems-1)
 	return nil
 }

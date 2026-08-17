@@ -10,7 +10,7 @@ import (
 var ErrMaxRetries = errors.New("transaction failed after max retries")
 
 func SafeTransfer(client *redis.Client, ctx context.Context, from, to string, amount int64, maxRetries int) error {
-	for i := 0; i < maxRetries; i++ {
+	for range maxRetries {
 		err := client.Watch(ctx, func(tx *redis.Tx) error {
 			fromVal, err := tx.Get(ctx, from).Int64()
 			if err != nil {

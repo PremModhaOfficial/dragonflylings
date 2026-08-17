@@ -24,14 +24,14 @@ import (
 // a command runs on a key). "__keyevent@0__:expired" is the keyevent channel (publishes the
 // KEY NAME whenever the "expired" event occurs). For expiry monitoring, you want keyevent.
 func ExpiryChannel() string {
-	return "__keyspace@0__:expired" // BUG: should be __keyevent@0__:expired
+	return "__keyevent@0__:expired" // BUG: should be __keyevent@0__:expired
 }
 
 // WatchExpiredKeys subscribes to expiry notifications and returns the subscription.
 // BUG: Uses wrong database index -- db 1 instead of db 0.
 func WatchExpiredKeys(subClient *redis.Client, ctx context.Context) (*redis.PubSub, error) {
 	// BUG: channel uses @1 (db 1), but keys live in db 0
-	channel := "__keyevent@1__:expired"
+	channel := "__keyevent@0__:expired"
 	sub := subClient.Subscribe(ctx, channel)
 	if _, err := sub.Receive(ctx); err != nil {
 		sub.Close()

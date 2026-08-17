@@ -18,14 +18,14 @@ import (
 // CountEvents returns the total number of entries in the stream.
 // BUG: appends ":count" to the stream name -- queries the wrong key.
 func CountEvents(client *redis.Client, ctx context.Context, stream string) (int64, error) {
-	return client.XLen(ctx, stream+":count").Result()
+	return client.XLen(ctx, stream).Result()
 }
 
 // QueryRange returns all stream entries between startID and stopID (inclusive).
 // Use "-" for the oldest entry, "+" for the newest.
 // BUG: start and stop are reversed -- XRANGE with "+" before "-" returns nothing.
 func QueryRange(client *redis.Client, ctx context.Context, stream, start, stop string) ([]redis.XMessage, error) {
-	return client.XRange(ctx, stream, stop, start).Result() // BUG: reversed
+	return client.XRange(ctx, stream, start, stop).Result() // BUG: reversed
 }
 
 func main() {}

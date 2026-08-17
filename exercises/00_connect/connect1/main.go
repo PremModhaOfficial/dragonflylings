@@ -3,9 +3,9 @@ package main
 // EXERCISE: connect1 - Your First PING
 //
 // PREDICT: Before writing any code, answer in your head:
-//   - What network protocol does Redis/Dragonfly use?
-//   - What do you think PING returns? Why would that command exist?
-//   - What's the difference between creating a client and connecting?
+//   - What network protocol does Redis/Dragonfly use? -- TCP
+//   - What do you think PING returns? Why would that command exist? -- PONG for health-check
+//   - What's the difference between creating a client and connecting? -- Client is just a configured entity (no network connection yet) connection happens lazily
 //
 // The test expects:
 //   1. Connect() returns a client pointing at localhost:6380

@@ -28,14 +28,14 @@ func PublishThenSubscribe(pubClient, subClient *redis.Client, channel string, me
 
 	// BUG: subscribing BEFORE publishing -- messages will be received
 	// Fix: move these lines to AFTER the Publish loop below
-	sub := subClient.Subscribe(ctx, channel)
-	defer sub.Close()
-	sub.Receive(ctx) //nolint:errcheck -- wait for subscription confirmation
 
 	// Publish messages (currently happens AFTER subscription -- messages arrive)
 	for _, msg := range messages {
 		pubClient.Publish(context.Background(), channel, msg)
 	}
+	sub := subClient.Subscribe(ctx, channel)
+	defer sub.Close()
+	sub.Receive(ctx) //nolint:errcheck -- wait for subscription confirmation
 
 	// Collect messages
 	for {

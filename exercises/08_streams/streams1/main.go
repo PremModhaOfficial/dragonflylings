@@ -22,7 +22,7 @@ func AddEvent(client *redis.Client, ctx context.Context, stream string, fields m
 		// BUG: "0" is a specific ID (maps to "0-0"). The first XAdd works, but
 		// subsequent calls fail because IDs must be monotonically increasing.
 		// Use "*" to let Dragonfly auto-generate a timestamp-based ID.
-		ID:     "0",
+		ID:     "*",
 		Values: fields,
 	}).Result()
 }
@@ -33,7 +33,7 @@ func ReadAllEvents(client *redis.Client, ctx context.Context, stream string) ([]
 	results, err := client.XRead(ctx, &redis.XReadArgs{
 		// BUG: "$" means "only messages added AFTER this XREAD call starts".
 		// To read existing messages from the beginning, use "0".
-		Streams: []string{stream, "$"},
+		Streams: []string{stream, "0"},
 		Count:   100,
 		Block:   -1, // non-blocking: return immediately even if no new messages
 	}).Result()

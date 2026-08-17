@@ -44,8 +44,7 @@ return 0
 // BUG: lock has no expiry (TTL=0). If the holder crashes, the lock
 // is held forever — no other process can acquire it.
 func Lock(ctx context.Context, client *redis.Client, lockKey, token string, ttl time.Duration) (bool, error) {
-	// BUG: passes 0 as TTL — lock never expires
-	return client.SetNX(ctx, lockKey, token, 0).Result()
+	return client.SetNX(ctx, lockKey, token, ttl).Result()
 }
 
 // Unlock releases the lock only if the caller's token matches.
@@ -54,16 +53,9 @@ func Lock(ctx context.Context, client *redis.Client, lockKey, token string, ttl 
 // Race condition: another process could acquire the lock between
 // our GET and DEL, and we'd delete their lock.
 func Unlock(ctx context.Context, client *redis.Client, lockKey, token string) error {
-	val, err := client.Get(ctx, lockKey).Result()
+	_, err := client.Eval(ctx, unlockScript, []string{lockKey}, token).Int()
 	if err == redis.Nil {
-		return nil // already expired — that's OK
+		return nil
 	}
-	if err != nil {
-		return err
-	}
-	if val == token {
-		// BUG: another process could SET lockKey between the GET above and this DEL
-		return client.Del(ctx, lockKey).Err()
-	}
-	return nil
+	return err
 }

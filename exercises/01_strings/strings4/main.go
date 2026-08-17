@@ -14,7 +14,6 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -27,21 +26,23 @@ func IncrementCounter(client *redis.Client, counterKey string) (int64, error) {
 	ctx := context.Background()
 
 	// TODO: Replace this entire block with a single client.Incr(ctx, counterKey).Result()
-	val, err := client.Get(ctx, counterKey).Result()
-	if err == redis.Nil {
-		val = "0"
-	} else if err != nil {
-		return 0, err
-	}
+	val, err := client.Incr(ctx, counterKey).Result()
 
-	n, err := strconv.ParseInt(val, 10, 64)
-	if err != nil {
-		return 0, err
-	}
+	// val, err := client.Get(ctx, counterKey).Result()
+	// if err == redis.Nil {
+	// 	val = "0"
+	// } else if err != nil {
+	// 	return 0, err
+	// }
 
-	n++
-	err = client.Set(ctx, counterKey, n, 0).Err()
-	return n, err
+	// n, err := strconv.ParseInt(val, 10, 64)
+	// if err != nil {
+	// 	return 0, err
+	// }
+	//
+	// n++
+	// err = client.Set(ctx, counterKey, n, 0).Err()
+	return val, err
 }
 
 // GetCounter reads the current value of a counter.

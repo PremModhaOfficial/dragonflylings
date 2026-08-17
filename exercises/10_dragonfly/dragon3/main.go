@@ -39,7 +39,11 @@ type Profile struct {
 // You must marshal Profile to JSON bytes first.
 func SetProfile(ctx context.Context, client *redis.Client, key string, p Profile) error {
 	// BUG: profile struct passed directly, not as a JSON string
-	return client.Do(ctx, "JSON.SET", key, "$", p).Err()
+	jsonProfile, err := json.Marshal(p)
+	if err != nil {
+		return err
+	}
+	return client.Do(ctx, "JSON.SET", key, "$", jsonProfile).Err()
 }
 
 // GetProfile retrieves a Profile stored as native JSON.
@@ -51,11 +55,11 @@ func GetProfile(ctx context.Context, client *redis.Client, key string) (Profile,
 		return Profile{}, err
 	}
 	// BUG: tries to unmarshal directly into Profile, but result is [{"name":...}]
-	var p Profile
+	var p []Profile
 	if err := json.Unmarshal([]byte(result), &p); err != nil {
 		return Profile{}, err
 	}
-	return p, nil
+	return p[0], nil
 }
 
 // GetProfileField retrieves a single string field from a stored Profile using JSONPath.

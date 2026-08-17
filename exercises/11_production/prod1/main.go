@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
+	"golang.org/x/sync/singleflight"
 )
 
 // Cache implements a read-through cache with Redis backing.
@@ -29,7 +30,7 @@ type Cache struct {
 	redis *redis.Client
 	ttl   time.Duration
 	// TODO: add a singleflight.Group field here
-	// sfGroup singleflight.Group
+	sfGroup singleflight.Group
 }
 
 // NewCache creates a Cache backed by the given Redis client with the given TTL.
@@ -56,13 +57,16 @@ func (c *Cache) Get(ctx context.Context, key string, fetch func() (string, error
 		return "", err
 	}
 
-	// Cache miss — BUG: all concurrent goroutines call fetch() simultaneously
-	val, err = fetch()
+	result, err, _ := c.sfGroup.Do(key, func() (any, error) {
+		v, fetchErr := fetch()
+		if fetchErr != nil {
+			return "", fetchErr
+		}
+		c.redis.Set(ctx, key, v, c.ttl)
+		return v, nil
+	})
 	if err != nil {
 		return "", err
 	}
-
-	// Populate cache (ignore set errors — cache is best-effort)
-	c.redis.Set(ctx, key, val, c.ttl)
-	return val, nil
+	return result.(string), nil
 }

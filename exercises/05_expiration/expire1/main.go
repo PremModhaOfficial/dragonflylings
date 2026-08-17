@@ -23,7 +23,7 @@ func SetWithExpiry(client *redis.Client, key, value string, d time.Duration) err
 		return err
 	}
 	// BUG: passing 0 as the duration -- should pass d
-	return client.Expire(ctx, key, 0).Err()
+	return client.Expire(ctx, key, d).Err()
 }
 
 // HasExpiry returns true if the key has an active expiration set.
@@ -35,14 +35,14 @@ func HasExpiry(client *redis.Client, key string) (bool, error) {
 	}
 	// BUG: TTL returns -1 for keys with NO expiry (persistent), not keys WITH expiry.
 	// A positive TTL means the key has an active expiry.
-	return ttl == -1, nil
+	return ttl > 0, nil
 }
 
 // MakePersistent removes the expiration from key without deleting the key itself.
 func MakePersistent(client *redis.Client, key string) error {
 	ctx := context.Background()
 	// BUG: Del deletes the key entirely. PERSIST removes expiry but keeps the value.
-	return client.Del(ctx, key).Err()
+	return client.Persist(ctx, key).Err()
 }
 
 func main() {}

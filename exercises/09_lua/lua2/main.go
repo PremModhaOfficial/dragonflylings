@@ -27,13 +27,13 @@ import (
 // In Dragonfly's multi-shard mode this will fail — the server cannot determine
 // shard placement when keys are hidden inside ARGV.
 const atomicTransferScript = `
-local from_val = tonumber(redis.call('GET', ARGV[1]) or '0')
-local amount   = tonumber(ARGV[3])
+local from_val = tonumber(redis.call('GET', KEYS[1]) or '0')
+local amount   = tonumber(ARGV[1])
 if from_val < amount then
   return redis.error_reply('insufficient balance')
 end
-redis.call('DECRBY', ARGV[1], amount)
-redis.call('INCRBY', ARGV[2], amount)
+redis.call('DECRBY', KEYS[1], amount)
+redis.call('INCRBY', KEYS[2], amount)
 return 1
 `
 
@@ -41,6 +41,6 @@ return 1
 // Returns an error if "from" has insufficient balance.
 func AtomicTransfer(ctx context.Context, client *redis.Client, fromKey, toKey string, amount int64) error {
 	// BUG: fromKey and toKey passed as ARGV (extra args), not as keys
-	_, err := client.Eval(ctx, atomicTransferScript, []string{}, fromKey, toKey, amount).Int()
+	_, err := client.Eval(ctx, atomicTransferScript, []string{fromKey, toKey}, amount).Int()
 	return err
 }

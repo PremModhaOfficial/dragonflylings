@@ -49,8 +49,8 @@ return 1
 // these keys may land on different shards, causing the Lua script to fail
 // with: ERR CROSSSLOT Keys in request don't hash to the same slot
 func MakeAccountKeys(accountID string) (balanceKey, reservedKey string) {
-	balanceKey = fmt.Sprintf("account:%s:balance", accountID)
-	reservedKey = fmt.Sprintf("account:%s:reserved", accountID)
+	balanceKey = fmt.Sprintf("{account:%s}:balance", accountID)
+	reservedKey = fmt.Sprintf("{account:%s}:reserved", accountID)
 	return
 }
 

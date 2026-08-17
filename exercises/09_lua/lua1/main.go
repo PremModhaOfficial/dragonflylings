@@ -28,10 +28,11 @@ import (
 // ARGV[2] = new value to set if current matches
 // Returns: 1 if swapped, 0 if current value didn't match
 const casScript = `
+-- language: lua
 local current = redis.call('GET', KEYS[1])
 if current == false then current = '' end
-if current == ARGV[2] then
-  redis.call('SET', KEYS[1], ARGV[1])
+if current == ARGV[1] then
+  redis.call('SET', KEYS[1], ARGV[2])
   return 1
 end
 return 0

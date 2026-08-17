@@ -26,8 +26,8 @@ import (
 func NewPool(addr string) *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:         addr,
-		PoolSize:     1,  // TODO: increase to 10
-		MinIdleConns: 0,  // TODO: set to 5
+		PoolSize:     10, // TODO: increase to 10
+		MinIdleConns: 5,  // TODO: set to 5
 		PoolTimeout:  2 * time.Second,
 	})
 }

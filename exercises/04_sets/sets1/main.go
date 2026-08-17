@@ -26,14 +26,14 @@ import (
 // BUG: Uses LPush (list) — allows duplicate tags and wrong data structure.
 func AddTag(client *redis.Client, itemKey, tag string) error {
 	ctx := context.Background()
-	return client.LPush(ctx, itemKey+":tags", tag).Err() // TODO: use SAdd
+	return client.SAdd(ctx, itemKey+":tags", tag).Err() // TODO: use SAdd
 }
 
 // GetTags returns all unique tags for an item.
 // BUG: Uses LRange (list) — doesn't deduplicate.
 func GetTags(client *redis.Client, itemKey string) ([]string, error) {
 	ctx := context.Background()
-	return client.LRange(ctx, itemKey+":tags", 0, -1).Result() // TODO: use SMembers
+	return client.SMembers(ctx, itemKey+":tags").Result() // TODO: use SMembers
 }
 
 // HasTag checks whether an item has a specific tag.

@@ -7,7 +7,7 @@ After completing this exercise, add these questions to `feynman/gap_notebook.md`
    Hint: Redis uses lazy expiry + periodic sampling. An expired key might still exist in memory briefly after its TTL.
 
 2. **What happens if you SET a key that already has a TTL?**
-   Does the TTL reset? Does the old TTL persist? Try it.
+   Does the TTL reset? Does the old TTL persist? Try it. 
 
 3. **Can you extend a key's TTL without knowing its current value?**
    What command would you use to reset the TTL without touching the value?

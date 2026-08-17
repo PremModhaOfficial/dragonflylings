@@ -31,6 +31,7 @@ Write your predictions in `feynman/gap_notebook.md`.
 ## Key Concepts
 
 ### Sets
+
 | Command | Description |
 |---------|-------------|
 | SADD key member [member ...] | Add members (duplicates ignored) |
@@ -41,6 +42,7 @@ Write your predictions in `feynman/gap_notebook.md`.
 | SDIFF key [key ...] | Members in first set not in others |
 
 ### Sorted Sets
+
 | Command | Description |
 |---------|-------------|
 | ZADD key score member | Add/update member with score |

@@ -36,7 +36,7 @@ func GetFollows(client *redis.Client, followerKey string) ([]string, error) {
 // BUG: Uses SUnion (everyone either follows) instead of SInter (everyone both follow).
 func CommonFollows(client *redis.Client, key1, key2 string) ([]string, error) {
 	ctx := context.Background()
-	return client.SUnion(ctx, key1, key2).Result() // TODO: use SInter
+	return client.SInter(ctx, key1, key2).Result() // TODO: use SInter
 }
 
 // AllFollows returns everyone that either user follows (union).

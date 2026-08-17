@@ -30,7 +30,7 @@ Write your predictions in `feynman/gap_notebook.md`.
 
 | Command | Description |
 |---------|-------------|
-| SET key value [EX seconds] | Store a string, optionally with expiry |
+| SET key value \[EX seconds\] | Store a string, optionally with expiry |
 | GET key | Retrieve a string (redis.Nil if missing) |
 | SETNX key value | Set only if key doesn't exist (foundation of locks) |
 | INCR / DECR | Atomic increment/decrement |

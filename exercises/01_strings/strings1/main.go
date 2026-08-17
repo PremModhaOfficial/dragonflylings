@@ -28,5 +28,5 @@ func SetUsername(client *redis.Client, userID, username string) error {
 // BUG: The key is wrong — it doesn't match what SetUsername stored.
 func GetUsername(client *redis.Client, userID string) (string, error) {
 	ctx := context.Background()
-	return client.Get(ctx, "user:name").Result() // TODO: fix the key
+	return client.Get(ctx, "user:"+userID+":name").Result() // TODO: fix the key
 }

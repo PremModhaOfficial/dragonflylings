@@ -17,15 +17,15 @@ func BestPrimitive(scenario string) string {
 	switch scenario {
 	case "batch-100-independent-writes":
 		// Need speed, no atomicity required -- each write is independent
-		return "transaction" // BUG: should be "pipeline"
+		return "pipeline" // BUG: should be "pipeline"
 
 	case "atomic-debit-credit":
 		// Must debit one account and credit another as a single unit
-		return "pipeline" // BUG: should be "transaction"
+		return "transaction" // BUG: should be "transaction"
 
 	case "server-side-conditional-set":
 		// Read a value, conditionally set another, atomically, server-side, no round trip
-		return "pipeline" // BUG: should be "lua"
+		return "lua" // BUG: should be "lua"
 	}
 	return "unknown"
 }

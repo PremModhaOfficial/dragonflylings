@@ -40,23 +40,28 @@ import (
 // Fixed window allows both bursts (different minute buckets).
 // Sliding window would correctly reject the second burst.
 func Allow(ctx context.Context, client *redis.Client, key string, limit int, window time.Duration) (bool, error) {
-	// BUG: fixed window — not a sliding window
-	// The window resets at fixed clock boundaries, not relative to now
+	now := time.Now()
+	windowStart := now.Add(-window).UnixNano()
+	member := strconv.FormatInt(now.UnixNano(), 10)
+
 	pipe := client.Pipeline()
-	incrCmd := pipe.Incr(ctx, key)
+	pipe.ZRemRangeByScore(ctx, key, "0", strconv.FormatInt(windowStart, 10))
+	pipe.ZAdd(ctx, key, redis.Z{Score: float64(now.UnixNano()), Member: member})
+	cardCmd := pipe.ZCard(ctx, key)
 	pipe.Expire(ctx, key, window)
+
 	_, err := pipe.Exec(ctx)
 	if err != nil {
 		return false, err
 	}
-	count := incrCmd.Val()
-	return count <= int64(limit), nil
+	return cardCmd.Val() <= int64(limit), nil
 }
 
 // RateLimitInfo returns the current request count and remaining capacity.
 func RateLimitInfo(ctx context.Context, client *redis.Client, key string, window time.Duration) (count int64, err error) {
 	now := time.Now()
 	windowStart := now.Add(-window).UnixNano()
+
 	count, err = client.ZCount(ctx, key,
 		strconv.FormatInt(windowStart, 10), "+inf").Result()
 	return

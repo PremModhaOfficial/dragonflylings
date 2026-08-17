@@ -28,8 +28,11 @@ func WaitForJob(client *redis.Client, queueKey string, timeout time.Duration) (s
 	ctx := context.Background()
 	// TODO: use client.BLPop(ctx, timeout, queueKey).Result()
 	// BLPop returns []string{key, value} or error after timeout
-	val, err := client.LPop(ctx, queueKey).Result() // BUG: non-blocking
-	return val, err
+	val, err := client.BLPop(ctx, timeout, queueKey).Result() // BUG: non-blocking
+	if err != nil {
+		return "", err
+	}
+	return val[1], nil
 }
 
 // EnqueueJob pushes a job to the right end of the queue.

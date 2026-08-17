@@ -21,4 +21,10 @@ Format: `- [ ] [your question] -- [why it matters]`
 - newClient is just the runtme entity not a connection 
 - If you configure a pool of 10 connections, when are those connections established? -- whne the first  connection is established?
 
+#### strings
+- 1
+    1. i dont think so incr is same as GET + parse + add 1 + SET?
+    2. GET should return should return nothing with exit code 1 
+    3. yes, dont know
+    4. N trips -> 1 Trip
 <!-- Add your gaps below as you work through exercises -->

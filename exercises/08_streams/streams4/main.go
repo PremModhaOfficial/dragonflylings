@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"time"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -22,13 +21,21 @@ import (
 func FindPendingMessages(client *redis.Client, ctx context.Context, stream, group string) ([]string, error) {
 	// BUG: XPending returns a summary (*XPending) with Count and bounds,
 	// but NOT individual message IDs. Use XPendingExt for detailed listing.
-	info, err := client.XPending(ctx, stream, group).Result()
+	entries, err := client.XPendingExt(ctx, &redis.XPendingExtArgs{
+		Stream: stream,
+		Group:  group,
+		Start:  "-",
+		End:    "+",
+		Count:  100,
+	}).Result()
 	if err != nil {
 		return nil, err
 	}
-	// Can't get IDs from summary -- returns empty
-	_ = info
-	return nil, nil
+	ids := make([]string, 0, len(entries))
+	for _, e := range entries {
+		ids = append(ids, e.ID)
+	}
+	return ids, nil
 }
 
 // ClaimMessages claims idle messages from crashed consumer and assigns to newConsumer.
@@ -42,7 +49,7 @@ func ClaimMessages(client *redis.Client, ctx context.Context, stream, group, new
 		Stream:   stream,
 		Group:    group,
 		Consumer: newConsumer,
-		MinIdle:  1 * time.Hour, // BUG: too long for tests
+		MinIdle:  0, // BUG: too long for tests
 		Messages: msgIDs,
 	}).Result()
 }

@@ -22,7 +22,7 @@ import (
 // already Done before Subscribe can receive anything.
 func Chat(subClient *redis.Client, pubClient *redis.Client, channel string, messages []string) ([]string, error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	cancel() // BUG: immediately cancels -- subscription and receive will fail
+	defer cancel() // BUG: immediately cancels -- subscription and receive will fail
 
 	sub := subClient.Subscribe(ctx, channel)
 	defer sub.Close()
@@ -40,7 +40,7 @@ func Chat(subClient *redis.Client, pubClient *redis.Client, channel string, mess
 	}()
 
 	received := make([]string, 0, len(messages))
-	for i := 0; i < len(messages); i++ {
+	for range messages {
 		msg, err := sub.ReceiveMessage(ctx)
 		if err != nil {
 			return received, nil

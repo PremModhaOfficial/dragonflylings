@@ -20,8 +20,8 @@ import (
 // BUG: The DecrBy and IncrBy targets are swapped -- from is incremented and to is decremented.
 func Transfer(client *redis.Client, ctx context.Context, from, to string, amount int64) error {
 	_, err := client.TxPipelined(ctx, func(pipe redis.Pipeliner) error {
-		pipe.DecrBy(ctx, to, amount)   // BUG: should decrement "from"
-		pipe.IncrBy(ctx, from, amount) // BUG: should increment "to"
+		pipe.DecrBy(ctx, from, amount) // BUG: should decrement "from"
+		pipe.IncrBy(ctx, to, amount)   // BUG: should increment "to"
 		return nil
 	})
 	return err

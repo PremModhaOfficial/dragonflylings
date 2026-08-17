@@ -23,11 +23,13 @@ func AddAndTrim(client *redis.Client, ctx context.Context, stream string, fields
 		Stream: stream,
 		ID:     "*",
 		Values: fields,
+		MaxLen: maxLen,
 	}).Err(); err != nil {
 		return err
 	}
+	return nil
 	// BUG: hardcoded 0 instead of maxLen -- trims everything
-	return client.XTrimMaxLen(ctx, stream, 0).Err()
+	// return client.XTrimMaxLen(ctx, stream, maxLen).Err()
 }
 
 func main() {}

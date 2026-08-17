@@ -31,7 +31,7 @@ func EnqueueTask(client *redis.Client, queueKey, task string) error {
 // DequeueTask removes and returns the next task from the queue.
 func DequeueTask(client *redis.Client, queueKey string) (string, error) {
 	ctx := context.Background()
-	return client.LPop(ctx, queueKey).Result()
+	return client.RPop(ctx, queueKey).Result()
 }
 
 // QueueLength returns the number of tasks waiting.

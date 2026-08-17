@@ -36,7 +36,8 @@ func SetManyPipelined(client *redis.Client, ctx context.Context, prefix string, 
 		pipe.Set(ctx, key, i, 0)
 	}
 	// BUG: Missing pipe.Exec(ctx)
-	return nil
+	_, err := pipe.Exec(ctx)
+	return err
 }
 
 func main() {}

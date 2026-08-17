@@ -33,7 +33,12 @@ import (
 // These are completely different metrics!
 func GetUsedMemory(ctx context.Context, client *redis.Client) (int64, error) {
 	// BUG: DBSIZE returns number of keys, not memory usage in bytes
-	return client.DBSize(ctx).Result()
+	result, err := client.Info(ctx, "memory").Result()
+	if err != nil {
+		return 0, err
+	}
+
+	return parseMemoryBytes(result)
 }
 
 // TriggerSnapshot starts a background save (BGSAVE) and returns immediately.
@@ -46,7 +51,7 @@ func TriggerSnapshot(ctx context.Context, client *redis.Client) error {
 // This means callers think the snapshot is done when it may still be running.
 func WaitForSnapshot(ctx context.Context, client *redis.Client) error {
 	// BUG: no polling — snapshot may still be in progress when this returns
-	return nil
+	return pollUntilDone(ctx, client, 100*time.Millisecond)
 }
 
 // parseInfoField extracts the value of a named field from an INFO response.
@@ -82,8 +87,10 @@ func pollUntilDone(ctx context.Context, client *redis.Client, interval time.Dura
 			if err != nil {
 				return err
 			}
-			val, _ := parseInfoField(info, "rdb_bgsave_in_progress")
-			if val == "0" {
+			if val, ok := parseInfoField(info, "saving"); ok && val == "0" {
+				return nil
+			}
+			if val, ok := parseInfoField(info, "rdb_bgsave_in_progress"); ok && val == "0" {
 				return nil
 			}
 		}

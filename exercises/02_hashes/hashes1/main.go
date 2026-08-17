@@ -23,14 +23,14 @@ import (
 // BUG: Uses string Set — stores a new top-level key instead of a hash field.
 func SetUserField(client *redis.Client, userKey, field, value string) error {
 	ctx := context.Background()
-	return client.Set(ctx, userKey+":"+field, value, 0).Err() // TODO: use HSet
+	return client.HSet(ctx, userKey, field, value).Err() // TODO: use HSet
 }
 
 // GetUserField retrieves a single field from a user profile hash.
 // BUG: Uses string Get — looks up wrong key.
 func GetUserField(client *redis.Client, userKey, field string) (string, error) {
 	ctx := context.Background()
-	return client.Get(ctx, userKey+":"+field).Result() // TODO: use HGet
+	return client.HGet(ctx, userKey, field).Result() // TODO: use HGet
 }
 
 // DeleteUser removes the entire user hash.

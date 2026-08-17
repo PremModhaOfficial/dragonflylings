@@ -14,6 +14,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -26,11 +27,11 @@ func AcquireLock(client *redis.Client, lockKey, ownerID string, ttl time.Duratio
 	ctx := context.Background()
 	// TODO: use SetNX instead of Set
 	// SetNX returns true if key was set (lock acquired), false if key existed (lock held)
-	err := client.Set(ctx, lockKey, ownerID, ttl).Err()
-	if err != nil {
+	res, err := client.SetNX(ctx, lockKey, ownerID, ttl).Result()
+	if err != nil || errors.Is(err, redis.Nil) {
 		return false, err
 	}
-	return true, nil // BUG: always returns true — should return SetNX result
+	return res, nil // BUG: always returns true — should return SetNX result
 }
 
 // ReleaseLock deletes the lock key.

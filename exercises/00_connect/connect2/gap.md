@@ -15,5 +15,5 @@ After completing this exercise, add these questions to `feynman/gap_notebook.md`
 ## Push Further
 
 - Look up the go-redis `Options` struct — how many timeout fields are there? What does each protect against?
-- What is "connection retry" and does go-redis do it automatically?
+- What is "connection retry" and does go-redis do it automatically?  -- yes configured with the MaxRetries
 - In Kubernetes, pods restart frequently. How would you build a Redis client that handles this gracefully?

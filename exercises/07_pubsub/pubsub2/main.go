@@ -18,7 +18,7 @@ import (
 // SubscribePattern subscribes to all channels matching the given glob pattern.
 // BUG: Uses Subscribe (exact match) instead of PSubscribe (pattern match).
 func SubscribePattern(client *redis.Client, ctx context.Context, pattern string) *redis.PubSub {
-	return client.Subscribe(ctx, pattern) // BUG: should be PSubscribe
+	return client.PSubscribe(ctx, pattern) // BUG: should be PSubscribe
 }
 
 // ReceivePatternMessage receives one message from a pattern subscription.
@@ -32,7 +32,7 @@ func ReceivePatternMessage(sub *redis.PubSub, ctx context.Context) (channel, pat
 	if err != nil {
 		return "", "", "", err
 	}
-	return msg.Channel, "", msg.Payload, nil // BUG: Pattern always empty here
+	return msg.Channel, msg.Pattern, msg.Payload, nil // BUG: Pattern always empty here
 }
 
 func main() {}

@@ -21,14 +21,20 @@ import (
 func CountPipelineFailures(client *redis.Client, ctx context.Context, key string) (int, error) {
 	pipe := client.Pipeline()
 	pipe.Set(ctx, key+":a", "good1", 0) // will succeed
-	pipe.Incr(ctx, key)                  // will FAIL: "not-a-number" is not an integer
+	pipe.Incr(ctx, key)                 // will FAIL: "not-a-number" is not an integer
 	pipe.Set(ctx, key+":b", "good2", 0) // will succeed
 
 	cmds, _ := pipe.Exec(ctx) // top-level error ignored intentionally
 
+	errCount := 0
+	for _, cmd := range cmds {
+		if cmd.Err() != nil {
+			errCount += 1
+		}
+	}
+
 	// BUG: not inspecting individual command errors -- always returns 0
-	_ = cmds
-	return 0, nil
+	return errCount, nil
 }
 
 func main() {}

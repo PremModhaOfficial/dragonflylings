@@ -26,12 +26,14 @@ import (
 func StoreUser(client *redis.Client, userKey string, data map[string]string) error {
 	ctx := context.Background()
 	// TODO: use client.HSet(ctx, userKey, data).Err() instead
-	for field, value := range data {
-		if err := client.Set(ctx, userKey+":"+field, value, 0).Err(); err != nil {
-			return err
-		}
-	}
-	return nil
+
+	return client.HSet(ctx, userKey, data).Err()
+	// for field, value := range data {
+	// 	if err := client.Set(ctx, userKey+":"+field, value, 0).Err(); err != nil {
+	// 		return err
+	// 	}
+	// }
+	// return nil
 }
 
 // GetUser retrieves all user fields.
@@ -39,29 +41,34 @@ func StoreUser(client *redis.Client, userKey string, data map[string]string) err
 func GetUser(client *redis.Client, userKey string) (map[string]string, error) {
 	ctx := context.Background()
 	// TODO: use client.HGetAll(ctx, userKey).Result() instead
-	fields := []string{"name", "email", "role", "age"}
-	result := make(map[string]string, len(fields))
-	for _, f := range fields {
-		val, err := client.Get(ctx, userKey+":"+f).Result()
-		if err == redis.Nil {
-			continue
-		}
-		if err != nil {
-			return nil, err
-		}
-		result[f] = val
-	}
-	return result, nil
+
+	return client.HGetAll(ctx, userKey).Result()
+	// fields := []string{"name", "email", "role", "age"}
+	// result := make(map[string]string, len(fields))
+	// for _, f := range fields {
+	// 	val, err := client.Get(ctx, userKey+":"+f).Result()
+	// 	if err == redis.Nil {
+	// 		continue
+	// 	}
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	result[f] = val
+	// }
+	// return result, nil
 }
 
 // DeleteUser removes all user data.
 // BUG: With string keys, must delete each key manually. With hash, Del(userKey) does it all.
 func DeleteUser(client *redis.Client, userKey string) error {
 	ctx := context.Background()
-	fields := []string{"name", "email", "role", "age"}
-	keys := make([]string, len(fields))
-	for i, f := range fields {
-		keys[i] = userKey + ":" + f
-	}
-	return client.Del(ctx, keys...).Err()
+
+	return client.Del(ctx, userKey).Err()
+
+	// fields := []string{"name", "email", "role", "age"}
+	// keys := make([]string, len(fields))
+	// for i, f := range fields {
+	// 	keys[i] = userKey + ":" + f
+	// }
+	// return client.Del(ctx, keys...).Err()
 }

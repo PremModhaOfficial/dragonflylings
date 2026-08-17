@@ -23,14 +23,14 @@ import (
 // BUG: Uses Incr on a string key — creates separate top-level keys instead of hash fields.
 func IncrPageView(client *redis.Client, analyticsKey, page string) (int64, error) {
 	ctx := context.Background()
-	return client.Incr(ctx, analyticsKey+":"+page).Result() // TODO: use HIncrBy
+	return client.HIncrBy(ctx, analyticsKey, page, 1).Result() // TODO: use HIncrBy
 }
 
 // GetPageViews retrieves the view count for a specific page.
 // BUG: Uses Get instead of HGet.
 func GetPageViews(client *redis.Client, analyticsKey, page string) (int64, error) {
 	ctx := context.Background()
-	return client.Get(ctx, analyticsKey+":"+page).Int64() // TODO: use HGet(...).Int64()
+	return client.HGet(ctx, analyticsKey, page).Int64() // TODO: use HGet(...).Int64()
 }
 
 // GetAllPageViews retrieves all page view counts as a map.
